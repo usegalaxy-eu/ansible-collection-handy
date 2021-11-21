@@ -1,0 +1,16 @@
+---
+galaxy_info:
+  author: Galaxy Europe
+  description: Enable PowerTools repository
+  company: Galaxy Europe
+  license: GPL-3.0
+  min_ansible_version: 2.11
+  role_name: powertools
+  platforms:
+  - name: EL
+    versions:
+    - 8
+  galaxy_tags:
+  - system
+dependencies: []
+
