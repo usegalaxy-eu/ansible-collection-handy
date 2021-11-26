@@ -4,7 +4,7 @@ Collection of handy Ansible roles used by UseGalaxy.eu
 
 ## Included content
 
-- [PowerTools](roles/powertools/)
+- [os_setup](roles/os_setup/)
 
 ## Installation
 
@@ -14,4 +14,7 @@ Install the collection via ansible-galaxy:
 
 ## Using this collection
 
-Please refer to the examples in the readmes of the role.
+Please refer to the examples in the readmes of roles.
+
+See also [Ansible using collections](https://docs.ansible.com/ansible/latest/user_guide/collections_using.html) for 
+more details about collections.

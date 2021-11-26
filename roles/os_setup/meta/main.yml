@@ -1,11 +1,11 @@
 ---
 galaxy_info:
   author: Galaxy Europe
-  description: Enable PowerTools repository
+  description: This role provides numerous useful operating system setup for a Galaxy Server
   company: Galaxy Europe
   license: GPL-3.0
   min_ansible_version: 2.11
-  role_name: powertools
+  role_name: os_setup
   platforms:
   - name: EL
     versions:

@@ -8,7 +8,7 @@ namespace: usegalaxy_eu
 name: handy
 
 # The version of the collection. Must be compatible with semantic versioning
-version: 1.0.0
+version: 2.0.0
 
 # The path to the Markdown (.md) readme file. This path is relative to the root of the collection
 readme: README.md
@@ -50,7 +50,7 @@ repository: https://github.com/usegalaxy-eu/ansible-collection-handy
 documentation: https://github.com/usegalaxy-eu/ansible-collection-handy
 
 # The URL to the homepage of the collection/project
-homepage: https://galaxproject.eu
+homepage: https://github.com/usegalaxy-eu/ansible-collection-handy
 
 # The URL to the collection issue tracker
 issues: https://github.com/usegalaxy-eu/ansible-collection-handy/issues

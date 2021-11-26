@@ -1,0 +1,8 @@
+---
+- name: Include powertools task
+  include_tasks: powertools.yml
+  when: enable_powertool
+
+- name: Include remap_user tasks for CentOS8
+  include_tasks: remap_user/centos8.yml
+  when: enable_remap_user and ansible_distribution == 'CentOS' and ansible_distribution_major_version == '8'

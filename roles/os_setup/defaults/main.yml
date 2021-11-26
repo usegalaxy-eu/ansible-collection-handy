@@ -1,3 +1,7 @@
+---
+# powertools
+enable_powertool: False
+
 CentOS:
   path: /etc/yum.repos.d/CentOS-PowerTools.repo
   section: PowerTools
@@ -12,3 +16,7 @@ CentOS_Linux:
     - "8.3"
     - "8.4"
     - "8.5"
+
+# remap_user
+debug: False
+enable_remap_user: False
