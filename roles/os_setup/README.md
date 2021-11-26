@@ -1,4 +1,4 @@
-usegalaxy_eu.handy.powertools
+usegalaxy_eu.handy.os_setup
 =======
 
 
