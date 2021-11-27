@@ -25,8 +25,8 @@ By default, all tasks are disabled
   roles:
     - role: usegalaxy_eu.handy.os_setup
       vars:
-        enable_powertool: True
-        enable_remap_user: False
+        enable_powertool: true
+        enable_remap_user: false
 ```
      
 License
