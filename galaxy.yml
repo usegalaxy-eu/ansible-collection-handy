@@ -1,3 +1,4 @@
+---
 ### REQUIRED
 # The namespace of the collection. This can be a company/brand/organization or product namespace under which all
 # content lives. May only contain alphanumeric lowercase characters and underscores. Namespaces cannot start with
@@ -8,7 +9,7 @@ namespace: usegalaxy_eu
 name: handy
 
 # The version of the collection. Must be compatible with semantic versioning
-version: 2.0.0
+version: 2.0.1
 
 # The path to the Markdown (.md) readme file. This path is relative to the root of the collection
 readme: README.md
@@ -16,7 +17,7 @@ readme: README.md
 # A list of the collection's content authors. Can be just the name or in the format 'Full Name <email> (url)
 # @nicks:irc/im.site#channel'
 authors:
-- Galaxy Europe
+  - Galaxy Europe
 
 ### OPTIONAL but strongly recommended
 # A short summary description of the collection
@@ -25,7 +26,7 @@ description: Handy roles used by UseGalaxy.eu
 # Either a single license or a list of licenses for content inside of a collection. Ansible Galaxy currently only
 # accepts L(SPDX,https://spdx.org/licenses/) licenses. This key is mutually exclusive with 'license_file'
 license:
-- GPL-3.0-only
+  - GPL-3.0-only
 
 # The path to the license file for the collection. This path is relative to the root of the collection. This key is
 # mutually exclusive with 'license'

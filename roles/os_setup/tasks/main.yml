@@ -1,7 +1,7 @@
 ---
 - name: Include powertools task
   include_tasks: powertools.yml
-  when: enable_powertool
+  when: enable_powertools
 
 - name: Include remap_user tasks for CentOS8
   include_tasks: remap_user/centos8.yml

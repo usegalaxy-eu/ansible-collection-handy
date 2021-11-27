@@ -1,15 +1,21 @@
 ---
-# powertools
-enable_powertool: False
+# defaults file for usegalaxy_eu.handy.os_setup
+#
+# Feature control
+#
+# Control which tasks are included,
+enable_powertools: false
+enable_remap_user: false
 
-CentOS:
+# powertools
+centos:
   path: /etc/yum.repos.d/CentOS-PowerTools.repo
   section: PowerTools
   version:
     - "8.1"
     - "8.2"
 
-CentOS_Linux:
+centos_linux:
   path: /etc/yum.repos.d/CentOS-Linux-PowerTools.repo
   section: powertools
   version:
@@ -18,5 +24,4 @@ CentOS_Linux:
     - "8.5"
 
 # remap_user
-debug: False
-enable_remap_user: False
+debug: false
