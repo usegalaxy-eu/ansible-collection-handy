@@ -3,8 +3,8 @@
 # but EPEL packages may depend on packages from it
 - name: Enable CentOS PowerTools repository
   ansible.builtin.ini_file:
-    path: "{{ CentOS.path }}"
-    section: "{{ CentOS.section }}"
+    path: "{{ centos.path }}"
+    section: "{{ centos.section }}"
     option: enabled
     value: "1"
     no_extra_spaces: true
@@ -13,8 +13,8 @@
 
 - name: Enable CentOS-Linux PowerTools repository
   ansible.builtin.ini_file:
-    path: "{{ CentOS_Linux.path }}"
-    section: "{{ CentOS_Linux.section }}"
+    path: "{{ centos_linux.path }}"
+    section: "{{ centos_linux.section }}"
     option: enabled
     value: "1"
     no_extra_spaces: true
