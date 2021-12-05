@@ -10,3 +10,7 @@
 - name: Include exclude_packages
   include_tasks: exclude_package_from_update.yml
   when: enable_exclude_packages
+
+- name: Include kernel_5 tasks for CentOS8
+  include_tasks: kernel_5.yml
+  when: enable_kernel_5 and ansible_distribution == 'CentOS' and ansible_distribution_major_version == '8'

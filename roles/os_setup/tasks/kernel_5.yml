@@ -1,0 +1,18 @@
+---
+# Install ELRepo for RHEL-8 or CentOS-8
+- name: Import a elrepo key from a url
+  ansible.builtin.rpm_key:
+    state: present
+    key: 'https://www.elrepo.org/RPM-GPG-KEY-elrepo.org'
+    fingerprint: '96C0 104F 6315 4731 1E0B B1AE 309B C305 BAAD AE52'
+
+- name: Install the rpm of elrepo-release from the elrepo repo
+  ansible.builtin.dnf:
+    name: 'https://www.elrepo.org/elrepo-release-8.el8.elrepo.noarch.rpm'
+    state: present
+
+- name: Install the latest version of kernel-lt from the elrepo-kernel repo
+  ansible.builtin.dnf:
+    name: "{{ kernel_5_package }}"
+    enablerepo: elrepo-kernel
+    state: present

@@ -7,11 +7,14 @@
 enable_powertools: false
 enable_remap_user: false
 enable_exclude_packages: false
+enable_kernel_5: false
+
+# kernel_5
+kernel_5_package: kernel-lt
 
 # exclude_package_from_update
 exclude_packages:
-  "condor*": /etc/yum.repos.d/epel.repo
-   "npm*": /etc/yum.repos.d/epel.repo
+  "/etc/yum.repos.d/epel.repo": "condor*,npm*"
 
 # powertools
 centos:

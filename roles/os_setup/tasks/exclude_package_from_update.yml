@@ -1,7 +1,7 @@
 ---
 - name: Exclude package inside custom repo file
   ansible.builtin.lineinfile:
-    dest: "{{ item.value }}"
-    line: 'exclude={{ ",".join("{{ item.key }}") }}'
+    dest: "{{ item.key }}"
+    line: "exclude={{ item.value }}"
     insertafter: '^ *enabled=1'
   loop: "{{ exclude_packages | dict2items }}"

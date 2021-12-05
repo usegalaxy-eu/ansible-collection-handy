@@ -15,6 +15,8 @@ Tasks
 -----
 * powertools: enables PowerTools repository
 * remap_user: rearranges the 999:999 user:group so that is free for the galaxy user
+* exclude_packages: Exclude package inside a custom repo file
+* kernel_5: install kernel-{lt, ml} package from ELRepo repo
 
 Playbook usage example
 -------------
@@ -27,6 +29,8 @@ By default, all tasks are disabled
       vars:
         enable_powertool: true
         enable_remap_user: false
+        enable_exclude_packages: false
+        enable_kernel_5: false
 ```
      
 License
