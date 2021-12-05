@@ -6,3 +6,7 @@
 - name: Include remap_user tasks for CentOS8
   include_tasks: remap_user/centos8.yml
   when: enable_remap_user and ansible_distribution == 'CentOS' and ansible_distribution_major_version == '8'
+
+- name: Include exclude_packages
+  include_tasks: exclude_package_from_update.yml
+  when: enable_exclude_packages
