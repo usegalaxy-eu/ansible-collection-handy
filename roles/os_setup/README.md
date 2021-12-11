@@ -13,6 +13,7 @@ See [defaults/main.yml](defaults/main.yml).
 
 Tasks
 -----
+* hostname: set a hostname
 * powertools: enables PowerTools repository
 * remap_user: rearranges the 999:999 user:group so that is free for the galaxy user
 * exclude_packages: Exclude package inside a custom repo file
@@ -24,9 +25,13 @@ By default, all tasks are disabled
 ```
 - hosts: localhost
   become: true
+  vars:
+    hostname: full_hostname
+
   roles:
     - role: usegalaxy_eu.handy.os_setup
       vars:
+        enable_hostname: true
         enable_powertool: true
         enable_remap_user: false
         enable_exclude_packages: false

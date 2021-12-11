@@ -1,4 +1,8 @@
 ---
+- name: Include hostname task
+  include_tasks: hostname.yml
+  when: enable_hostname
+
 - name: Include powertools task
   include_tasks: powertools.yml
   when: enable_powertools

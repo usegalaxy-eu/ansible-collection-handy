@@ -4,6 +4,7 @@
 # Feature control
 #
 # Control which tasks are included,
+enable_hostname: false
 enable_powertools: false
 enable_remap_user: false
 enable_exclude_packages: false
