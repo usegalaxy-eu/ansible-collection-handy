@@ -1,0 +1,13 @@
+---
+- name: Install cgroups packages
+  ansible.builtin.package:
+    state: latest
+    name:
+    - libcgroup
+    - libcgroup-tools
+
+- name: enable and start cgconfig
+  ansible.builtin.service:
+    name: cgconfig
+    enabled: yes
+    state: started

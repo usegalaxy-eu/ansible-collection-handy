@@ -26,3 +26,7 @@
 - name: Include grub task
   include_tasks: grub.yml
   when: enable_grub
+
+- name: Include cgroups task
+  include_tasks: cgroups.yml
+  when: enable_cgroups

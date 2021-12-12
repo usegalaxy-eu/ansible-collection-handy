@@ -11,6 +11,7 @@ enable_exclude_packages: false
 enable_kernel_5: false
 enable_pam_limits: false
 enable_grub: false
+enable_cgroups: false
 
 # pam_limits:
 pam_limits:
