@@ -7,7 +7,7 @@
   include_tasks: powertools.yml
   when: enable_powertools
 
-- name: Include remap_user tasks for CentOS8
+- name: Include remap_user task for CentOS8
   include_tasks: remap_user/centos8.yml
   when: enable_remap_user and ansible_distribution == 'CentOS' and ansible_distribution_major_version == '8'
 
@@ -15,10 +15,14 @@
   include_tasks: exclude_package_from_update.yml
   when: enable_exclude_packages
 
-- name: Include kernel_5 tasks for CentOS8
+- name: Include kernel_5 task for CentOS8
   include_tasks: kernel_5.yml
   when: enable_kernel_5 and ansible_distribution == 'CentOS' and ansible_distribution_major_version == '8'
 
-- name: Include pam_limits tasks
+- name: Include pam_limits task
   include_tasks: pam_limits.yml
   when: enable_pam_limits
+
+- name: Include grub task
+  include_tasks: grub.yml
+  when: enable_grub

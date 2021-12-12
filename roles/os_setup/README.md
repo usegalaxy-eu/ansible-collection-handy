@@ -20,6 +20,7 @@ Tasks
 * exclude_packages: Exclude package inside a custom repo file
 * kernel_5: install kernel-{lt, ml} package from ELRepo repo
 * pam_limits: prevent user from creating files larger than n TB
+* grub: Set up grub
 
 Playbook usage example
 -------------

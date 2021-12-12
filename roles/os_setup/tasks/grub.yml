@@ -1,0 +1,10 @@
+---
+# Add a grub option needed to visualize VM's logs into the OpenStack dashboard
+- name: update grub config
+  ansible.builtin.lineinfile:
+    state: present
+    dest: /etc/default/grub
+    backrefs: true
+    regexp: '^(GRUB_CMDLINE_LINUX=(?!.* console)\"[^\"]+)(\".*)'
+    line: '\1 console=ttyS0\2'
+  notify: update grub config
