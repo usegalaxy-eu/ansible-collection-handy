@@ -5,7 +5,8 @@ usegalaxy_eu.handy.os_setup
 This role provides numerous useful setup for a Galaxy Server running into a RedHat/CentOS system.
 Requirements
 ------------
-Ansible >= 2.11
+ansible-core >= 2.11
+[community.general](https://galaxy.ansible.com/community/general) >= 4.0.2
 
 Role Variables
 --------------
@@ -18,6 +19,7 @@ Tasks
 * remap_user: rearranges the 999:999 user:group so that is free for the galaxy user
 * exclude_packages: Exclude package inside a custom repo file
 * kernel_5: install kernel-{lt, ml} package from ELRepo repo
+* pam_limits: prevent user from creating files larger than n TB
 
 Playbook usage example
 -------------

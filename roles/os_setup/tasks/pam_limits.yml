@@ -1,0 +1,8 @@
+---
+- name: Prevent galaxy from creating files larger than 1 TB
+  community.general.pam_limits:
+    domain: "{{ item.domain }}"
+    limit_type: "{{ item.type }}"
+    limit_item: "{{ item.item }}"
+    value: "{{ item.value }}"
+  loop: "{{ pam_limits }}"

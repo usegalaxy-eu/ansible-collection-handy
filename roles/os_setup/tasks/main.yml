@@ -18,3 +18,7 @@
 - name: Include kernel_5 tasks for CentOS8
   include_tasks: kernel_5.yml
   when: enable_kernel_5 and ansible_distribution == 'CentOS' and ansible_distribution_major_version == '8'
+
+- name: Include pam_limits tasks
+  include_tasks: pam_limits.yml
+  when: enable_pam_limits

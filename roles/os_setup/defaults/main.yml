@@ -9,6 +9,14 @@ enable_powertools: false
 enable_remap_user: false
 enable_exclude_packages: false
 enable_kernel_5: false
+enable_pam_limits: false
+
+# pam_limits:
+pam_limits:
+  - domain: galaxy
+    type: hard
+    item: fsize
+    value: "{{ 1 * 1024 * 1024 * 1024 }}"  # 1 TB
 
 # kernel_5
 kernel_5_package: kernel-lt
