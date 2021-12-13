@@ -12,6 +12,7 @@ enable_kernel_5: false
 enable_pam_limits: false
 enable_grub: false
 enable_cgroups: false
+enable_journald: false
 
 # pam_limits:
 pam_limits:

@@ -22,6 +22,7 @@ Tasks
 * pam_limits: prevent user from creating files larger than n TB
 * grub: set up grub
 * cgroups: install and enable cgroups
+* journald: configure journald
 
 Playbook usage example
 -------------

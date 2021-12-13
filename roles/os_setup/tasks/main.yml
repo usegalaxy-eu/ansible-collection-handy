@@ -30,3 +30,7 @@
 - name: Include cgroups task
   include_tasks: cgroups.yml
   when: enable_cgroups
+
+- name: Include journald task
+  include_tasks: journald.yml
+  when: enable_journald
