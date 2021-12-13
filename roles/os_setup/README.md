@@ -23,6 +23,7 @@ Tasks
 * grub: set up grub
 * cgroups: install and enable cgroups
 * journald: configure journald
+* install_software: install software from a list of groups
 
 Playbook usage example
 -------------

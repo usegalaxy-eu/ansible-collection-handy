@@ -34,3 +34,7 @@
 - name: Include journald task
   include_tasks: journald.yml
   when: enable_journald
+
+- name: Include install_software task
+  include_tasks: install_software.yml
+  when: enable_install_software
