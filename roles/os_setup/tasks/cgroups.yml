@@ -2,12 +2,11 @@
 - name: Install cgroups packages
   ansible.builtin.package:
     state: latest
-    name:
-    - libcgroup
-    - libcgroup-tools
+    name: "{{ item }}"
+  loop: "{{ software_packages.cgroups }}"
 
 - name: enable and start cgconfig
   ansible.builtin.service:
     name: cgconfig
-    enabled: yes
+    enabled: true
     state: started

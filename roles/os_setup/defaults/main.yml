@@ -45,3 +45,66 @@ centos_linux:
 
 # remap_user
 debug: false
+
+# packages
+software_groups_to_install:
+  - admin
+  - configuration
+  - editors
+  - utils
+software_packages:
+  admin:
+    - at
+    - atop
+    - htop
+    - haveged
+    - iotop
+    - iftop
+  apps:
+    - singularity
+  configuration:
+    - ansible
+  cgroups:
+    - libcgroup
+    - libcgroup-tools
+  debug:
+    - lsof
+    - nmap
+    - strace
+    - tcpdump
+  development:
+    - "@development"
+    - git
+    - jq
+    - patch
+  editors:
+    - vim
+  fonts:
+    - dejavu-fonts-common
+    - dejavu-sans-fonts
+    - dejavu-sans-mono-fonts
+    - dejavu-serif-fonts
+    - fontconfig
+    - fontconfig-devel
+    - fontpackages-filesystem
+    - liberation-fonts-common
+    - liberation-sans-fonts
+    - libfontenc
+    - mesa-libGL
+    - perl-Digest-MD5
+    - perl-Digest-SHA
+    - urw-fonts
+    - xorg-x11-font-utils
+  terminals:
+    - mosh
+    - screen
+    - tmux
+  utils:
+    - bind-utils
+    - curl
+    - libnsl
+    - nfs-utils
+    - tmpwatch
+    - unzip
+    - yum-utils
+    - wget
