@@ -7,5 +7,5 @@ help:
 lint:
 	yamllint .
 
-build-collection:
+build-collection: lint
 	ansible-galaxy collection build
