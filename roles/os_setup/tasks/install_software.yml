@@ -74,7 +74,7 @@
 - name: Ensure services are enabled + started
   systemd:
     name: "{{ item.daemon_name }}"
-    enabled: yes
+    enabled: true
     state: started
   loop:
     - "{{ software_packages.services }}"

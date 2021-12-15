@@ -95,9 +95,9 @@ software_packages:
     - urw-fonts
     - xorg-x11-font-utils
   services:
-    - { 'package_name': 'at', 'daemon_name': 'atd' }
-    - { 'package_name': 'atop', 'daemon_name': 'atop' }
-    - { 'package_name': 'haveged', 'daemon_name': 'haveged' }
+    - {'package_name': 'at', 'daemon_name': 'atd'}
+    - {'package_name': 'atop', 'daemon_name': 'atop'}
+    - {'package_name': 'haveged', 'daemon_name': 'haveged'}
   terminals:
     - mosh
     - screen
