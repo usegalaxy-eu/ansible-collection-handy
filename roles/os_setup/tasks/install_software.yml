@@ -63,6 +63,23 @@
     - "{{ software_packages.fonts }}"
   when: "'fonts' in software_groups_to_install"
 
+- name: Install services software groups
+  ansible.builtin.package:
+    state: latest
+    name: "{{ item.package_name }}"
+  loop:
+    - "{{ software_packages.services }}"
+  when: "'services' in software_groups_to_install"
+
+- name: Ensure services are enabled + started
+  systemd:
+    name: "{{ item.daemon_name }}"
+    enabled: yes
+    state: started
+  loop:
+    - "{{ software_packages.services }}"
+  when: "'services' in software_groups_to_install"
+
 - name: Install terminals software groups
   ansible.builtin.package:
     state: latest

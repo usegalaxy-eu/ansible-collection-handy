@@ -56,10 +56,7 @@ software_groups_to_install:
   - utils
 software_packages:
   admin:
-    - at
-    - atop
     - htop
-    - haveged
     - iotop
     - iftop
   apps:
@@ -97,6 +94,10 @@ software_packages:
     - perl-Digest-SHA
     - urw-fonts
     - xorg-x11-font-utils
+  services:
+    - { 'package_name': 'at', 'daemon_name': 'atd' }
+    - { 'package_name': 'atop', 'daemon_name': 'atop' }
+    - { 'package_name': 'haveged', 'daemon_name': 'haveged' }
   terminals:
     - mosh
     - screen
