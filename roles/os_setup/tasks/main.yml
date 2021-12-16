@@ -38,3 +38,7 @@
 - name: Include install_software task
   include_tasks: install_software.yml
   when: enable_install_software
+
+- name: Include cron task
+  include_tasks: cron.yml
+  when: enable_ansible_root_cron
