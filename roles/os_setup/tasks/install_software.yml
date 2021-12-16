@@ -67,8 +67,7 @@
   ansible.builtin.package:
     state: latest
     name: "{{ item.package_name }}"
-  loop:
-    - "{{ software_packages.services }}"
+  loop: "{{ software_packages.services }}"
   when: "'services' in software_groups_to_install"
 
 - name: Ensure services are enabled + started
@@ -76,8 +75,7 @@
     name: "{{ item.daemon_name }}"
     enabled: true
     state: started
-  loop:
-    - "{{ software_packages.services }}"
+  loop: "{{ software_packages.services }}"
   when: "'services' in software_groups_to_install"
 
 - name: Install terminals software groups
