@@ -1,0 +1,11 @@
+---
+- name: Creates a cron file under /etc/cron.d
+  ansible.builtin.cron:
+    name: "{{ item.name }}"
+    weekday: "{{ item.weekday}}"
+    minute: "{{ item.minute }}"
+    hour: "{{ item.hour }}"
+    user: root
+    job: "{{ item.job }}"
+    cron_file: ansible_root_cron
+  loop: "{{ ansible_root_cron }}"

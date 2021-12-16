@@ -14,6 +14,16 @@ enable_grub: false
 enable_cgroups: false
 enable_journald: false
 enable_install_software: false
+enable_ansible_root_cron: false
+
+
+# ansible_root_cron
+ansible_root_cron:
+  - name: "Prune unused Docker objects"
+    weekday: "{{ 7 | random }}"
+    minute: "{{ 60 | random }}"
+    hour: "{{ 5 | random }}"
+    job: "docker system prune -f"
 
 # pam_limits:
 pam_limits:

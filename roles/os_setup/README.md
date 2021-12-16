@@ -24,6 +24,7 @@ Tasks
 * cgroups: install and enable cgroups
 * journald: configure journald
 * install_software: install software from a list of groups
+* ansible_root_cron: install cron tasks as root
 
 Playbook usage example
 -------------
