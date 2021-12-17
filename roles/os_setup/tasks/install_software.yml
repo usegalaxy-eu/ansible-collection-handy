@@ -78,6 +78,14 @@
   loop: "{{ software_packages.services }}"
   when: "'services' in software_groups_to_install"
 
+- name: Install pdf_export_deps software groups
+  ansible.builtin.package:
+    state: latest
+    name: "{{ item }}"
+  loop:
+    - "{{ software_packages.pdf_export_deps }}"
+  when: "'pdf_export_deps' in software_groups_to_install"
+
 - name: Install terminals software groups
   ansible.builtin.package:
     state: latest
