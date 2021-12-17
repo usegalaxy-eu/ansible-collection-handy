@@ -108,6 +108,10 @@ software_packages:
     - {'package_name': 'at', 'daemon_name': 'atd'}
     - {'package_name': 'atop', 'daemon_name': 'atop'}
     - {'package_name': 'haveged', 'daemon_name': 'haveged'}
+  pdf_export_deps:
+    - cairo
+    - cairo-devel
+    - pango-devel
   terminals:
     - mosh
     - screen
