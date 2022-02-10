@@ -1,22 +1,7 @@
 ---
 # geerlingguy.repo-epel role doesn't enable PowerTools repository
 # but EPEL packages may depend on packages from it
-- name: Enable CentOS PowerTools repository
-  ansible.builtin.ini_file:
-    path: "{{ centos.path }}"
-    section: "{{ centos.section }}"
-    option: enabled
-    value: "1"
-    no_extra_spaces: true
-    mode: '0644'
-  when: ansible_os_family == "RedHat" and ansible_distribution_version in centos.version
-
-- name: Enable CentOS-Linux PowerTools repository
-  ansible.builtin.ini_file:
-    path: "{{ centos_linux.path }}"
-    section: "{{ centos_linux.section }}"
-    option: enabled
-    value: "1"
-    no_extra_spaces: true
-    mode: '0644'
-  when: ansible_os_family == "RedHat" and ansible_distribution_version in centos_linux.version
+- name: Enable PowerTools repository
+  ansible.builtin.command:
+    cmd: dnf config-manager --set-enabled powertools
+  when: ansible_os_family == "RedHat"
