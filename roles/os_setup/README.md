@@ -20,7 +20,7 @@ Tasks
 * exclude_packages: exclude package inside a custom repo file
 * kernel_5: install kernel-{lt, ml} package from ELRepo repo
 * pam_limits: prevent user from creating files larger than n TB
-* grub: set up grub
+* grub: add a grub option needed to visualize VM's logs into the OpenStack dashboard
 * cgroups: install and enable cgroups
 * journald: configure journald
 * install_software: install software from a list of groups
