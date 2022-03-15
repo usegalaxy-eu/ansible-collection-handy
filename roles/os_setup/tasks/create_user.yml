@@ -1,0 +1,12 @@
+---
+- name: Ensure group exists with correct gid
+  ansible.builtin.group:
+    name: "{{ user_group_name }}"
+    state: present
+    gid: "{{ user_gid }}"
+- name: Add the user with a specific uid and a primary group
+  ansible.builtin.user:
+    name: "{{ user_name }}"
+    comment: RabbitMQ app
+    uid: "{{ user_uid }}"
+    group: "{{ user_group_name }}"

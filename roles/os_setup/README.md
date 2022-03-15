@@ -17,6 +17,7 @@ Tasks
 * hostname: set a hostname
 * powertools: enables PowerTools repository
 * remap_user: rearranges the 999:999 user:group so that is free for the galaxy user
+* create_user: adds a group nad user
 * exclude_packages: exclude package inside a custom repo file
 * kernel_5: install kernel-{lt, ml} package from ELRepo repo
 * pam_limits: prevent user from creating files larger than n TB

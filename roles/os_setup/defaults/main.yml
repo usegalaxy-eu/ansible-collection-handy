@@ -1,12 +1,8 @@
 ---
-# defaults file for usegalaxy_eu.handy.os_setup
-#
-# Feature control
-#
-# Control which tasks are included,
 enable_hostname: false
 enable_powertools: false
 enable_remap_user: false
+enable_create_user: false
 enable_exclude_packages: false
 enable_kernel_5: false
 enable_pam_limits: false
@@ -41,6 +37,12 @@ exclude_packages:
 
 # remap_user
 debug: false
+
+# create_user
+user_name: galaxy
+user_uid: 999
+user_group_name: galaxy
+user_gid: 999
 
 # packages
 software_groups_to_install:

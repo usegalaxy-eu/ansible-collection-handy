@@ -11,6 +11,10 @@
   include_tasks: remap_user/centos8.yml
   when: enable_remap_user and ansible_os_family == "RedHat" and ansible_distribution_major_version == '8'
 
+- name: Create user task
+  include_tasks: create_user.yml
+  when: enable_create_user
+
 - name: Include exclude_packages
   include_tasks: exclude_package_from_update.yml
   when: enable_exclude_packages
