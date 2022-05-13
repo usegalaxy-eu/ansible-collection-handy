@@ -6,5 +6,5 @@
     dest: /etc/default/grub
     backrefs: true
     regexp: '^(GRUB_CMDLINE_LINUX=(?!.* console)\"[^\"]+)(\".*)'
-    line: '\1 console=ttyS0\2'
+    line: "\1 {{ boot_options }}\2"
   notify: update grub config
