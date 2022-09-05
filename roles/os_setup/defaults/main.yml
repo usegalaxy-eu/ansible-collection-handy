@@ -114,3 +114,4 @@ software_packages:
     - unzip
     - yum-utils
     - wget
+    - bash-completion
