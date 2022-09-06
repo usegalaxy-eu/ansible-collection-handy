@@ -77,6 +77,7 @@ software_packages:
     - patch
   editors:
     - vim
+    - nano
   fonts:
     - dejavu-fonts-common
     - dejavu-sans-fonts
