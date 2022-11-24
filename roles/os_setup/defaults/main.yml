@@ -107,6 +107,7 @@ software_packages:
     - screen
     - tmux
   utils:
+    - make
     - bind-utils
     - curl
     - libnsl
