@@ -4,9 +4,11 @@
     state: latest
     name: "{{ item }}"
   loop: "{{ software_packages.cgroups }}"
+  when: not (ansible_os_family == 'RedHat' and ansible_facts['distribution_major_version'] == '9')
 
 - name: enable and start cgconfig
   ansible.builtin.service:
     name: cgconfig
     enabled: true
     state: started
+  when: not (ansible_os_family == 'RedHat' and ansible_facts['distribution_major_version'] == '9')
