@@ -59,7 +59,8 @@ software_packages:
     - iotop
     - iftop
   apps:
-    - singularity
+    - "{{ singularity-ce if ansible_facts['distribution_major_version'] == '9' else singularity }}"
+singularity
   configuration:
     - ansible
   cgroups:
