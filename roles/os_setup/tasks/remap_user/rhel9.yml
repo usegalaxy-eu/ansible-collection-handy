@@ -28,12 +28,11 @@
     when: debug
 
   - name: Replace in group file
-    ansible.builtin.lineinfile:
+    ansible.builtin.replace:
       path: /etc/group
-      regexp: ':x:999:'
-      line: check_group.stdout
-      validate: /usr/sbin/pwck %s
-    when: (not ansible_check_mode and check_group.rc == 0)
+      regexp: '999'
+      replace: "500"
+    when: (not ansible_check_mode and check_group.rc == 0 and not check_group.stdout == '')
 
   - name: Search and replace 999 group files
     ansible.builtin.shell:
@@ -64,7 +63,7 @@
       regexp: '999'
       replace: "500"
       validate: /usr/sbin/pwck %s
-    when: (not ansible_check_mode and check_user.rc == 0)
+    when: (not ansible_check_mode and check_user.rc == 0 and not check_user.stdout == '')
 
   - name: Search and replace 999 user files
     ansible.builtin.shell: 
