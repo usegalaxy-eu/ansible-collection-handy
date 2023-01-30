@@ -17,7 +17,7 @@
   block:
   - name: Check for GID 999 group
     ansible.builtin.shell:
-      cmd: grep 999 /etc/group | cut -d ':' -f1,2 | sed 's/$/:500/'
+      cmd: grep 999 /etc/group
     ignore_errors: true
     register: check_group
     changed_when: false
@@ -47,7 +47,7 @@
   block:
   - name: Check for UID 999 in user file
     ansible.builtin.shell: 
-      cmd: grep 999 /etc/passwd | cut -d ':' -f1,2 | sed 's/$/:500/'
+      cmd: grep 999 /etc/passwd
     ignore_errors: true
     register: check_user
     changed_when: false
