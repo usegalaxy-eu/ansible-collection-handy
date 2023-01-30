@@ -34,13 +34,13 @@
         replace: "500"
     when: (not ansible_check_mode and check_group.rc == 0 and not check_group.stdout == '')
 
-  - name: Search and replace 999 group files
-    ansible.builtin.shell:
-      cmd: "find / -mount -gid 999 -exec chgrp 500 '{}' +"
-    ignore_errors: true
-    when: check_group.rc == 0
-    tags:
-      - ignore_errors
+    - name: Search and replace 999 group files
+      ansible.builtin.shell:
+        cmd: "find / -mount -gid 999 -exec chgrp 500 '{}' +"
+      ignore_errors: true
+      when: check_group.rc == 0
+      tags:
+        - ignore_errors
   when: (not "galaxy" in getent_group.keys())
 
 - name: Remap UID 999 if Galaxy user is not present
