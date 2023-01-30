@@ -1,53 +1,75 @@
 ---
-# In Rocky9 ssh_keys uses the gid 999 and systemd-coredump uses the uid 999
+# Rocky9 uses GID 999 and UID 999
 # both of which we need to map to the galaxy user and group.
 
-- name: Check for input group
-  ansible.builtin.command: grep -Fxq "ssh_keys:x:999:" /etc/group
-  ignore_errors: true
-  register: check_input
-  changed_when: false
 
-- name: Print return information from the previous task
-  ansible.builtin.debug:
-    var: check_input
-  when: debug
+- name: Get all groups
+  getent:
+    database: group
+    split: ':'
 
-- name: Replace in group file
-  ansible.builtin.lineinfile:
-    path: /etc/group
-    regexp: 'ssh_keys:x:999:'
-    line: 'ssh_keys:x:500:'
-  when: 'not ansible_check_mode and check_input.rc == 0'
+- name: Get all users
+  getent:
+    database: passwd
+    split: ':'
 
-- name: Search and replace 999 group files
-  ansible.builtin.command: "find / -mount -gid 999 -exec chgrp 500 '{}' +"
-  ignore_errors: true
-  when: check_input.rc == 0
-  tags:
-    - ignore_errors
+- name: Remap GID 999 if Galaxy group is not present
+  block:
+    - name: Check for GID 999 group
+      ansible.builtin.shell:
+        cmd: grep 999 /etc/group
+      ignore_errors: true
+      register: check_group
+      changed_when: false
 
-- name: Check for systemd-coredump in user file
-  ansible.builtin.command: grep -Fxq "systemd-coredump:x:999:996:systemd Core Dumper:/:/sbin/nologin" /etc/passwd
-  ignore_errors: true
-  register: check_coredump
-  changed_when: false
+    - name: Print return information from the previous task
+      ansible.builtin.debug:
+        var: check_group
+      when: debug
 
-- name: Print return information from the previous task2
-  ansible.builtin.debug:
-    var: check_coredump
-  when: debug
+    - name: Replace in group file
+      ansible.builtin.replace:
+        path: /etc/group
+        regexp: '999'
+        replace: "500"
+      when: (not ansible_check_mode and check_group.rc == 0 and not check_group.stdout == '')
 
-- name: Replace in passwd file
-  ansible.builtin.lineinfile:
-    path: /etc/passwd
-    regexp: 'systemd-coredump:x:999:996:systemd Core Dumper:/:/sbin/nologin'
-    line: 'systemd-coredump:x:500:996:systemd Core Dumper:/:/sbin/nologin'
-  when: 'not ansible_check_mode and check_coredump.rc == 0'
+    - name: Search and replace 999 group files
+      ansible.builtin.shell:
+        cmd: "find / -mount -gid 999 -exec chgrp 500 '{}' +"
+      ignore_errors: true
+      when: check_group.rc == 0
+      tags:
+        - ignore_errors
+  when: (not "galaxy" in getent_group.keys())
 
-- name: Search and replace 999 user files
-  ansible.builtin.command: "find / -mount -uid 999 -exec chown 500 '{}' +"
-  ignore_errors: true
-  when: check_coredump.rc == 0
-  tags:
-    - ignore_errors
+- name: Remap UID 999 if Galaxy user is not present
+  block:
+    - name: Check for UID 999 in user file
+      ansible.builtin.shell:
+        cmd: grep 999 /etc/passwd
+      ignore_errors: true
+      register: check_user
+      changed_when: false
+
+    - name: Print return information from the previous task2
+      ansible.builtin.debug:
+        var: check_user
+      when: debug
+
+    - name: Replace in passwd file
+      ansible.builtin.replace:
+        path: /etc/passwd
+        regexp: '999'
+        replace: "500"
+        validate: /usr/sbin/pwck %s
+      when: (not ansible_check_mode and check_user.rc == 0 and not check_user.stdout == '')
+
+    - name: Search and replace 999 user files
+      ansible.builtin.shell:
+        cmd: "find / -mount -uid 999 -exec chown 500 '{}' +"
+      ignore_errors: true
+      when: check_user.rc == 0
+      tags:
+        - ignore_errors
+  when: (not "galaxy" in getent_passwd.keys())
