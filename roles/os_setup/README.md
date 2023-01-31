@@ -22,7 +22,7 @@ Tasks
 * kernel_5: install kernel-{lt, ml} package from ELRepo repo
 * pam_limits: prevent user from creating files larger than n TB
 * grub: add a grub option needed to visualize VM's logs into the OpenStack dashboard
-* cgroups: install and enable cgroups
+* cgroups: install and enable cgroups ⚠️ cgroupsv2 are default in Rocky 9 so this is not used
 * journald: configure journald
 * install_software: install software from a list of groups
 * ansible_root_cron: install cron tasks as root
