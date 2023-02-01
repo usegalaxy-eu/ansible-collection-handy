@@ -59,7 +59,7 @@ software_packages:
     - iotop
     - iftop
   apps:
-    - "{{ apptainer if ansible_facts['distribution_major_version'] == '9' else singularity }}"
+    - apptainer
   configuration:
     - ansible
   cgroups:
@@ -79,7 +79,7 @@ software_packages:
     - vim
     - nano
   fonts:
-    - dejavu-fonts-common
+    - dejavu-fonts-all
     - dejavu-sans-fonts
     - dejavu-sans-mono-fonts
     - dejavu-serif-fonts
@@ -93,7 +93,7 @@ software_packages:
     - perl-Digest-MD5
     - perl-Digest-SHA
     - urw-fonts
-    - xorg-x11-font-utils
+    - mkfontscale
   services:
     - {'package_name': 'at', 'daemon_name': 'atd'}
     - {'package_name': 'atop', 'daemon_name': 'atop'}
