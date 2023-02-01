@@ -56,11 +56,25 @@
   when: "'editors' in software_groups_to_install"
 
 - name: Install fonts software groups
-  ansible.builtin.package:
-    state: latest
-    name: "{{ item }}"
-  loop:
-    - "{{ software_packages.fonts }}"
+  block:
+
+    - name: Install packages EL 9
+      ansible.builtin.dnf:
+        state: latest
+        enablerepo: devel
+        name: "{{ item }}"
+      loop:
+        - "{{ software_packages.fonts }}"
+      when: (ansible_distribution_major_version == '9' and ansible_os_family == "RedHat")
+    
+    - name: Install packages for other releases
+      ansible.builtin.package:
+        state: latest
+        name: "{{ item }}"
+      loop:
+        - "{{ software_packages.fonts }}"
+      when: (not ansible_distribution_major_version == '9')
+
   when: "'fonts' in software_groups_to_install"
 
 - name: Install services software groups
