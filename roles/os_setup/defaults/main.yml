@@ -96,7 +96,6 @@ software_packages:
     - mkfontscale
   services:
     - {'package_name': 'at', 'daemon_name': 'atd'}
-    - {'package_name': 'atop', 'daemon_name': 'atop'}
     - {'package_name': 'haveged', 'daemon_name': 'haveged'}
   pdf_export_deps:
     - cairo
