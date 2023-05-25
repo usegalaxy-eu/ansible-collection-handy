@@ -38,6 +38,16 @@ exclude_packages:
 # remap_user
 debug: false
 
+# create_user
+handy_groups:
+  - group_name: galaxy
+    group_gid: 999
+
+handy_users:
+  - user_name: galaxy
+    user_uid: 999
+    user_group: galaxy
+
 # grub
 boot_options: "console=ttyS0"
 
