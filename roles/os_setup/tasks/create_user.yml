@@ -1,13 +1,23 @@
 ---
-- name: Ensure group exists with correct gid
+- name: Ensure group exists
   ansible.builtin.group:
-    name: "{{ user_group_name }}"
-    state: present
-    gid: "{{ user_gid }}"
+    name: "{{ item.group_name }}"
+    gid: "{{ item.group_gid | default(omit) }}"
+    system: "{{ item.user_system | default('true') }}"
+    local: "{{ item.user_local | default(omit) }}"
+    state: "{{ item.group_state | default('present') }}"
+  loop: "{{ handy_groups }}"
+
 - name: Add the user with a specific uid and a primary group
   ansible.builtin.user:
-    name: "{{ user_name }}"
-    comment: "{{ user_comment | default(omit) }}"
-    shell: "{{ user_shell | default(omit) }}"
-    uid: "{{ user_uid }}"
-    group: "{{ user_group_name }}"
+    name: "{{ item.user_name }}"
+    uid: "{{ item.user_uid | default(omit) }}"
+    group: "{{ item.user_group | default(omit) }}"
+    comment: "{{ item.user_comment | default(omit) }}"
+    create_home: "{{ item.user_create_home | default('true') }}"
+    home: "{{ item.user_home | default(omit) }}"
+    shell: "{{ item.user_shell | default(omit) }}"
+    system: "{{ item.user_system | default('true') }}"
+    local: "{{ item.user_local | default(omit) }}"
+    state: "{{ item.user_state | default('present') }}"
+  loop: "{{ handy_users }}"

@@ -39,10 +39,14 @@ exclude_packages:
 debug: false
 
 # create_user
-user_name: galaxy
-user_uid: 999
-user_group_name: galaxy
-user_gid: 999
+handy_groups:
+  - group_name: galaxy
+    group_gid: 999
+
+handy_users:
+  - user_name: galaxy
+    user_uid: 999
+    user_group: galaxy
 
 # grub
 boot_options: "console=ttyS0"
