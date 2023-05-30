@@ -79,7 +79,7 @@ software_packages:
     - vim
     - nano
   fonts:
-    - dejavu-fonts-all
+    - "{{ 'dejavu-fonts-common' if (ansible_facts['distribution_major_version'] == '8') else 'dejavu-fonts-all' }}"
     - dejavu-sans-fonts
     - dejavu-sans-mono-fonts
     - dejavu-serif-fonts
