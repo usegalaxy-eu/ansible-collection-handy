@@ -1,7 +1,6 @@
 ---
-# Rocky9 uses GID 999 and UID 999
-# both of which we need to map to the galaxy user and group.
-
+# RHEL uses GID 999 and UID 999, both of which need to be
+# mapped to the galaxy user and group.
 
 - name: Get all groups
   getent:
@@ -18,9 +17,9 @@
     - name: Check for GID 999 group
       ansible.builtin.shell:
         cmd: grep 999 /etc/group
-      ignore_errors: true
       register: check_group
       changed_when: false
+      failed_when: check_group.rc not in (0, 1)
 
     - name: Print return information from the previous task
       ansible.builtin.debug:
@@ -48,11 +47,11 @@
     - name: Check for UID 999 in user file
       ansible.builtin.shell:
         cmd: grep 999 /etc/passwd
-      ignore_errors: true
       register: check_user
       changed_when: false
+      failed_when: check_user.rc not in (0, 1)
 
-    - name: Print return information from the previous task2
+    - name: Print return information from the previous task
       ansible.builtin.debug:
         var: check_user
       when: debug
