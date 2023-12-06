@@ -1,74 +1,115 @@
+# This role provides a `create_user.yml` task that creates the users and groups
+# defined in `handy_users` and `handy_groups`. Said task allows to choose the
+# UID and GID of the users and groups to be created.
+#
+# However, the specified UIDs and GIDs may already have been taken by other
+# users or groups. This task, `remap_user.yml`, maps those users and groups to
+# different UIDs and GIDs so that the ones specified in `handy_users` and
+# `handy_groups` become available to the new users.
 ---
-# RHEL uses GID 999 and UID 999, both of which need to be
-# mapped to the galaxy user and group.
 
-- name: Get all groups
-  getent:
+- name: Get all groups.
+  ansible.builtin.getent:
     database: group
     split: ':'
 
-- name: Get all users
-  getent:
+- name: Get all users.
+  ansible.builtin.getent:
     database: passwd
     split: ':'
 
-- name: Remap GID 999 if Galaxy group is not present
+- name: Compute user mapping.
+  become: false
   block:
-    - name: Check for GID 999 group
+    - name: Compute user mapping using script.
       ansible.builtin.shell:
-        cmd: grep 999 /etc/group
-      register: check_group
+        chdir: "{{ role_path }}/files"
+        cmd: |
+          set -o pipefail;
+          ./remap_user.py \
+              {% for name, data in getent_passwd.items() %} -e {{ data[1] }}:{{ name }}{% endfor %} \
+              {% for user in handy_users %} -d {{ user.user_uid }}:{{ user.user_name }}{% endfor %} \
+              | tail -n +2
+      register: os_setup_user_mapping_script
       changed_when: false
-      failed_when: check_group.rc not in (0, 1)
+      delegate_to: localhost
 
-    - name: Print return information from the previous task
-      ansible.builtin.debug:
-        var: check_group
-      when: debug
+    - name: Process script output.
+      ansible.builtin.set_fact:
+        os_setup_user_mapping: "{{ os_setup_user_mapping | default([]) + [item | split('\t') | map('trim') | list] }}"
+      loop: "{{ os_setup_user_mapping_script.stdout_lines }}"
+      # Each line of output is of the form below
+      # "     998\t      7"
+      # "     999\t      13"
+      # and the final outcome is a list of lists.
+      # [["998", "7"], ["999", "9"]]
 
-    - name: Replace in group file
-      ansible.builtin.replace:
-        path: /etc/group
-        regexp: '999'
-        replace: "500"
-      when: (not ansible_check_mode and check_group.rc == 0 and not check_group.stdout == '')
-
-    - name: Search and replace 999 group files
-      ansible.builtin.shell:
-        cmd: "find / -mount -gid 999 -exec chgrp 500 '{}' +"
-      ignore_errors: true
-      when: check_group.rc == 0
-      tags:
-        - ignore_errors
-  when: (not "galaxy" in getent_group.keys())
-
-- name: Remap UID 999 if Galaxy user is not present
+- name: Compute group mapping.
+  become: false
   block:
-    - name: Check for UID 999 in user file
+    - name: Compute group mapping using script.
       ansible.builtin.shell:
-        cmd: grep 999 /etc/passwd
-      register: check_user
+        chdir: "{{ role_path }}/files"
+        cmd: |
+          set -o pipefail;
+          ./remap_user.py \
+              {% for name, data in getent_group.items() %} -e {{ data[1] }}:{{ name }}{% endfor %} \
+              {% for group in handy_groups %} -d {{ group.group_gid }}:{{ group.group_name }}{% endfor %} \
+              | tail -n +2
+      register: os_setup_group_mapping_script
       changed_when: false
-      failed_when: check_user.rc not in (0, 1)
+      delegate_to: localhost
 
-    - name: Print return information from the previous task
-      ansible.builtin.debug:
-        var: check_user
-      when: debug
+    - name: Process script output.
+      ansible.builtin.set_fact:
+        os_setup_group_mapping: "{{ os_setup_group_mapping | default([]) + [item | split('\t') | map('trim') | list] }}"
+      loop: "{{ os_setup_group_mapping_script.stdout_lines }}"
+      # Each line of output is of the form below
+      # "     998\t      7"
+      # "     999\t      13"
+      # and the final outcome is a list of lists.
+      # [["998", "7"], ["999", "9"]]
 
-    - name: Replace in passwd file
+- name: Replace users.
+  become: true
+  when: os_setup_user_mapping is defined
+  block:
+    - name: Replace user in users file.
       ansible.builtin.replace:
         path: /etc/passwd
-        regexp: '999'
-        replace: "500"
-        validate: /usr/sbin/pwck %s
-      when: (not ansible_check_mode and check_user.rc == 0 and not check_user.stdout == '')
+        regexp: "^((?:[^:]*:){2})({{ item.0 }})((?::[^:]*){4})$"
+        replace: '\g<1>{{ item.1 }}\g<3>'
+        validate: /usr/sbin/pwck --read-only %s
+      loop: "{{ os_setup_user_mapping }}"
 
-    - name: Search and replace 999 user files
+    - name: Search and replace owner of user's files.
       ansible.builtin.shell:
-        cmd: "find / -mount -uid 999 -exec chown 500 '{}' +"
-      ignore_errors: true
-      when: check_user.rc == 0
-      tags:
-        - ignore_errors
-  when: (not "galaxy" in getent_passwd.keys())
+        cmd: "find / -mount -uid {{ item.0 }} -exec chown {{ item.1 }} '{}' +"
+      loop: "{{ os_setup_user_mapping }}"
+      changed_when: true
+
+- name: Replace groups.
+  become: true
+  when: os_setup_group_mapping is defined
+  block:
+    - name: Replace group in groups file.
+      ansible.builtin.replace:
+        path: /etc/group
+        regexp: "^((?:[^:]*:){2})({{ item.0 }})((?::[^:]*){1})$"
+        replace: '\g<1>{{ item.1 }}\g<3>'
+        validate: /usr/sbin/grpck --read-only %s
+      loop: "{{ os_setup_group_mapping }}"
+
+    - name: Replace group in users file.
+      ansible.builtin.replace:
+        path: /etc/passwd
+        regexp: "^((?:[^:]*:){3})({{ item.0 }})((?::[^:]*){3})$"
+        replace: '\g<1>{{ item.1 }}\g<3>'
+        validate: /usr/sbin/pwck --read-only %s
+      loop: "{{ os_setup_group_mapping }}"
+
+    - name: Search and replace group of group's files.
+      ansible.builtin.shell:
+        cmd: "find / -mount -gid {{ item.0 }} -exec chgrp {{ item.1 }} '{}' +"
+      loop: "{{ os_setup_group_mapping }}"
+      changed_when: true
