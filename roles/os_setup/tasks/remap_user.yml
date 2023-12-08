@@ -2,6 +2,12 @@
 # RHEL uses GID 999 and UID 999, both of which need to be
 # mapped to the galaxy user and group.
 
+- name: Ensure findutils is installed
+  become: true
+  ansible.builtin.package:
+    name: findutils
+    state: installed
+
 - name: Get all groups
   getent:
     database: group
