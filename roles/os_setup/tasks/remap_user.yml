@@ -1,11 +1,20 @@
-# This role provides a `create_user.yml` task that creates the users and groups
-# defined in `handy_users` and `handy_groups`. Said task allows to choose the
-# UID and GID of the users and groups to be created.
+# This role provides a collection of tasks "create_user.yml" that creates the
+# users and groups defined in `handy_users` and `handy_groups`. Said tasks
+# allow to choose the UID and GID of the users and groups to be created.
 #
 # However, the specified UIDs and GIDs may already have been taken by other
-# users or groups. This task, `remap_user.yml`, maps those users and groups to
-# different UIDs and GIDs so that the ones specified in `handy_users` and
-# `handy_groups` become available to the new users.
+# users or groups. The tasks in this file, "remap_user.yml", map those users
+# and groups to different UIDs and GIDs so that the ones specified in
+# `handy_users` and `handy_groups` become available to the new users.
+#
+# For example, in CentOS 8, UID 999 is allocated to user `systemd-coredump`,
+# but in usegalaxy.eu's infrastructure, UID 999 is meant to be assigned to
+# user `galaxy` (the Galaxy application). The tasks in this file can remap user
+# `systemd-coredump` to another UID so that 999 becomes free to the `galaxy`
+# user, that would be created afterward by the tasks in create_user.yml.
+#
+# A much more detailed example is available in the file
+# roles/os_setup/files/remap_user.py.
 ---
 
 - name: Get all groups.
