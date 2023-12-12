@@ -1,9 +1,50 @@
 #!/usr/bin/env python
 """Script used by the `remap_user.yml` task to remap users and groups.
 
-Given a list of existing group or user ids and desired user or group ids,
-compute a mapping from existing group or user ids to new user or group ids that
+Given a list of existing user or group ids and desired user or group ids,
+compute a mapping from existing user or group ids to new user or group ids that
 do not conflict with other existing ids nor the desired ids.
+
+For example, assume service "fwupd" has created a user named "fwupd" and the
+operating system has assigned UID 999 to it. Furthermore, assume that two new
+applications need to run on the server (for example, Galaxy and HTCondor) with
+UIDs 999 and 3 respectively (for example, because they need to access a remote
+filesystem using NFS and the server has already allocated UIDs 999 and 3 to the
+applications, meaning that existing files belonging to the applications are
+already owned by UIDs 999 and 3 respectively). In addition, assume the
+/etc/passwd file looks as follows:
+
+```
+root:x:0:0::/root:/bin/bash
+bin:x:1:1::/:/usr/bin/nologin
+daemon:x:2:2::/:/usr/bin/nologin
+mail:x:8:12::/var/spool/mail:/usr/bin/nologin
+fwupd:x:999:962:Firmware update daemon:/var/lib/fwupd:/usr/bin/nologin
+```
+
+It is then necessary to remap the "fwupd" user to a different UID so that 999
+becomes free for the first application (e.g. Galaxy). This script can find a
+new UID for "fwupd" that is different both from 999 and 3. To do so, call it
+passing as arguments the existing and desired UIDs as demonstrated below.
+
+```
+./remap_user.py \
+  -e 0:root \
+  -e 1:bin \
+  -e 2:daemon \
+  -e 8:mail \
+  -d 999:galaxy \
+  -d 3:condor
+```
+
+The output of the call is shown below. Notice that user 999 ("fwupd") does not
+get mapped to UID 3, despite it being free, since it is meant to belong to user
+"condor".
+
+```
+EXISTING    TARGET
+     999         4
+```
 """
 
 from argparse import ArgumentParser
