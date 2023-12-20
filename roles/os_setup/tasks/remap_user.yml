@@ -32,6 +32,7 @@
   block:
     - name: Compute user mapping using script.
       ansible.builtin.shell:
+        executable: /bin/bash
         chdir: "{{ role_path }}/files"
         cmd: |
           set -o pipefail;
@@ -58,6 +59,7 @@
   block:
     - name: Compute group mapping using script.
       ansible.builtin.shell:
+        executable: /bin/bash
         chdir: "{{ role_path }}/files"
         cmd: |
           set -o pipefail;
@@ -93,6 +95,7 @@
 
     - name: Search and replace owner of user's files.
       ansible.builtin.shell:
+        executable: /bin/bash
         cmd: "find / -mount -uid {{ item.0 }} -exec chown {{ item.1 }} '{}' +"
       loop: "{{ os_setup_user_mapping }}"
       changed_when: true
@@ -119,6 +122,7 @@
 
     - name: Search and replace group of group's files.
       ansible.builtin.shell:
+        executable: /bin/bash
         cmd: "find / -mount -gid {{ item.0 }} -exec chgrp {{ item.1 }} '{}' +"
       loop: "{{ os_setup_group_mapping }}"
       changed_when: true
