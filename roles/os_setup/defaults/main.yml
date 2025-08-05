@@ -59,6 +59,7 @@ software_groups_to_install:
   - utils
 software_packages:
   admin:
+    - btop
     - htop
     - iotop
     - iftop
@@ -79,6 +80,7 @@ software_packages:
     - git
     - jq
     - patch
+    - tree
   editors:
     - vim
     - nano
