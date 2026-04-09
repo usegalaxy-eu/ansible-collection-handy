@@ -66,6 +66,7 @@
       loop:
         - "{{ software_packages.fonts }}"
       when: (ansible_distribution_major_version | int >= 9 and ansible_os_family == "RedHat")
+      ignore_errors: yes # Ignores packages that are removed / renamed
 
     - name: Install packages for other releases
       ansible.builtin.package:
