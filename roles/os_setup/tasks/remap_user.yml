@@ -85,13 +85,12 @@
   become: true
   when: os_setup_user_mapping is defined
   block:
-    - name: Replace user in users file.
-      ansible.builtin.replace:
-        path: /etc/passwd
-        regexp: "^((?:[^:]*:){2})({{ item.0 }})((?::[^:]*){4})$"
-        replace: '\g<1>{{ item.1 }}\g<3>'
-        validate: /usr/sbin/pwck --read-only %s
+    - name: Change UID and update ownership using system tools
+      # Use shell module to evaluate $(id -nu ...)
+      ansible.builtin.shell:
+        cmd: "usermod -u {{ item.1 }} $(id -nu {{ item.0 }})"
       loop: "{{ os_setup_user_mapping }}"
+      changed_when: true
 
     - name: Search and replace owner of user's files.
       ansible.builtin.shell:
@@ -104,21 +103,12 @@
   become: true
   when: os_setup_group_mapping is defined
   block:
-    - name: Replace group in groups file.
-      ansible.builtin.replace:
-        path: /etc/group
-        regexp: "^((?:[^:]*:){2})({{ item.0 }})((?::[^:]*){1})$"
-        replace: '\g<1>{{ item.1 }}\g<3>'
-        validate: /usr/sbin/grpck --read-only %s
+    - name: Change GID using system tools
+      # Use shell module to evaluate $(getent ...) and the pipe
+      ansible.builtin.shell:
+        cmd: "groupmod -g {{ item.1 }} $(getent group {{ item.0 }} | cut -d: -f1)"
       loop: "{{ os_setup_group_mapping }}"
-
-    - name: Replace group in users file.
-      ansible.builtin.replace:
-        path: /etc/passwd
-        regexp: "^((?:[^:]*:){3})({{ item.0 }})((?::[^:]*){3})$"
-        replace: '\g<1>{{ item.1 }}\g<3>'
-        validate: /usr/sbin/pwck --read-only %s
-      loop: "{{ os_setup_group_mapping }}"
+      changed_when: true
 
     - name: Search and replace group of group's files.
       ansible.builtin.shell:
