@@ -21,3 +21,4 @@
     local: "{{ item.user_local | default(omit) }}"
     state: "{{ item.user_state | default('present') }}"
   loop: "{{ handy_users }}"
+  ignore_errors: yes  # If the user is created will ignore
