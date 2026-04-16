@@ -61,7 +61,7 @@
     - name: Install packages EL 9 & EL 10
       ansible.builtin.dnf:
         state: latest
-        enablerepo: crb
+        enablerepo: devel
         name: "{{ item }}"
       loop:
         - "{{ software_packages.fonts }}"
