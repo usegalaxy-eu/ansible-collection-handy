@@ -6,7 +6,7 @@
   ansible.builtin.lineinfile:
     path: /etc/systemd/journald.conf
     line: "Storage=persistent"
-    regexp: "^#?Storage=.*"
+    regexp: "^.*Storage=.*"
     create: yes              # This is the magic fix
     owner: root
     group: root
