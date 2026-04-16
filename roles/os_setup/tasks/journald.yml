@@ -4,6 +4,10 @@
 # exist. We switch this to persistent because that's the desired behaviour.
 - name: Fix journald default
   ansible.builtin.lineinfile:
-    dest: /etc/systemd/journald.conf
+    path: /etc/systemd/journald.conf
     line: "Storage=persistent"
     regexp: "^.*Storage=.*"
+    create: yes              # This is the magic fix
+    owner: root
+    group: root
+    mode: '0644'
