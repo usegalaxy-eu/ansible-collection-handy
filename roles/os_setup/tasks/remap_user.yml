@@ -85,12 +85,13 @@
   become: true
   when: os_setup_user_mapping is defined
   block:
-    - name: Change UID and update ownership using system tools
-      # Use shell module to evaluate $(id -nu ...)
-      ansible.builtin.shell:
-        cmd: "usermod -u {{ item.1 }} $(id -nu {{ item.0 }})"
+    - name: Replace user in users file.
+      ansible.builtin.replace:
+        path: /etc/passwd
+        regexp: "^((?:[^:]*:){2})({{ item.0 }})((?::[^:]*){4})$"
+        replace: '\g<1>{{ item.1 }}\g<3>'
+        validate: /usr/sbin/pwck --read-only %s
       loop: "{{ os_setup_user_mapping }}"
-      changed_when: true
 
     - name: Search and replace owner of user's files.
       ansible.builtin.shell:
