@@ -63,6 +63,7 @@ software_packages:
     - htop
     - iotop
     - iftop
+    - pssh
   apps:
     - apptainer
   configuration:
